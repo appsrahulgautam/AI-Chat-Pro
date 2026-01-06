@@ -88,9 +88,7 @@ Designed for **real users, real conversations, and real-world usage**.
 
 ---
 
-
-
-> **“Feels like a real product, not a prototype.”**
+## “Feels like a real product, not a prototype.”\*\*
 
 - Proper spacing, padding & margins
 - Clear visual hierarchy
@@ -132,4 +130,3 @@ This project is **open-source** and free to use for learning, customization, and
 ### ⭐ Like this project? Star it and follow for more!
 
 </div>
-```
