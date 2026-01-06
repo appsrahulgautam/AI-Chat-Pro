@@ -87,6 +87,8 @@ Designed for **real users, real conversations, and real-world usage**.
 <img src="./public/screenshots/s3.png" width="45%" alt="Mobile Chat UI" />
 
 ---
+</div>
+
 
 ## Feels like a real product, not a prototype.
 
