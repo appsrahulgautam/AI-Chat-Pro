@@ -90,7 +90,7 @@ Designed for **real users, real conversations, and real-world usage**.
 </div>
 
 
-## Feels like a real product, not a prototype.
+## 🚀 Feels like a real product, not a prototype.
 
 - Proper spacing, padding & margins
 - Clear visual hierarchy
