@@ -5,8 +5,10 @@ import { sendMessageToAI } from "@/app/actions/chat";
 
 export default function ChatInput({
   onReply,
+  onUserMessage,
 }: {
   onReply: (reply: string) => void;
+  onUserMessage: (text: string) => void;
 }) {
   const [state, formAction] = useActionState(sendMessageToAI, {
     reply: "",
@@ -18,7 +20,14 @@ export default function ChatInput({
   }
 
   return (
-    <form action={formAction} className="border-t border-zinc-800 p-4">
+    <form
+      action={(formData) => {
+        const message = formData.get("message") as string;
+        onUserMessage(message);
+        formAction(formData);
+      }}
+      className="border-t border-zinc-800 p-4"
+    >
       <div className="flex gap-3">
         <input
           name="message"
