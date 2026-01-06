@@ -32,8 +32,15 @@ export default function HomePage() {
     if (savedMessages) {
       try {
         const parsedMessages = JSON.parse(savedMessages);
-        if (parsedMessages.length > 1) {
-          setMessages(parsedMessages);
+        // Validate that parsed messages have the correct Message type
+        const validMessages = parsedMessages.filter(
+          (msg: any): msg is Message =>
+            (msg.role === "user" || msg.role === "assistant") &&
+            typeof msg.content === "string"
+        );
+
+        if (validMessages.length > 1) {
+          setMessages(validMessages);
         }
       } catch (e) {
         console.error("Error loading saved messages:", e);
@@ -47,8 +54,13 @@ export default function HomePage() {
   }, [messages]);
 
   const handleUserMessage = (text: string) => {
-    // Create new messages array
-    const newMessages = [...messages, { role: "user", content: text }];
+    // Create new message with proper type
+    const userMessage: Message = {
+      role: "user" as const,
+      content: text,
+    };
+
+    const newMessages: Message[] = [...messages, userMessage];
     setMessages(newMessages);
 
     // Increment message count and save to localStorage
@@ -64,7 +76,12 @@ export default function HomePage() {
   };
 
   const handleReply = (reply: string) => {
-    const newMessages = [...messages, { role: "assistant", content: reply }];
+    const assistantMessage: Message = {
+      role: "assistant" as const,
+      content: reply,
+    };
+
+    const newMessages: Message[] = [...messages, assistantMessage];
     setMessages(newMessages);
   };
 
@@ -76,6 +93,7 @@ export default function HomePage() {
   const resetChat = () => {
     localStorage.removeItem("neuralchat_message_count");
     localStorage.removeItem("neuralchat_messages");
+    localStorage.removeItem("neuralchat_dialog_seen");
     setMessageCount(0);
     setIsLimitReached(false);
     setMessages([initialMessage]);
@@ -114,7 +132,7 @@ export default function HomePage() {
                 </div>
               </div>
               <span className="text-xl font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
-                AI Chat Pro
+                NeuralChat
               </span>
             </div>
 
