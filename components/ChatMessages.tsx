@@ -15,45 +15,89 @@ export default function ChatMessages({ messages }: { messages: Message[] }) {
   }, [messages]);
 
   return (
-    <div className="relative flex-1 overflow-y-auto">
-      {/* Ambient glow */}
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_30%_0%,rgba(99,102,241,0.18),transparent_45%)]" />
-
-      <div className="relative mx-auto max-w-5xl px-10 py-16 space-y-12">
+    <div className="h-full overflow-y-auto px-4 py-6 scroll-smooth">
+      <div className="max-w-3xl mx-auto space-y-6 px-4">
         {messages.map((msg, i) => {
           const isUser = msg.role === "user";
 
           return (
             <div
               key={i}
-              className={`flex ${isUser ? "justify-end" : "justify-start"}`}
+              className={`flex ${
+                isUser ? "justify-end" : "justify-start"
+              } animate-in fade-in duration-300`}
+              style={{ animationDelay: `${i * 50}ms` }}
             >
               <div
-                className={`group relative max-w-3xl ${
-                  isUser ? "text-right" : "text-left"
-                }`}
+                className={`flex max-w-[85%] ${
+                  isUser ? "flex-row-reverse" : "flex-row"
+                } items-end gap-3`}
               >
-                {/* Role label */}
-                <div className="mb-2 text-[11px] uppercase tracking-widest text-zinc-500">
-                  {isUser ? "You" : "AI Assistant"}
+                {/* Avatar */}
+                <div className={`flex-shrink-0 ${isUser ? "ml-2" : "mr-2"}`}>
+                  <div
+                    className={`h-8 w-8 rounded-full flex items-center justify-center ${
+                      isUser
+                        ? "bg-gradient-to-br from-blue-500 to-cyan-400"
+                        : "bg-gradient-to-br from-purple-500 to-pink-500"
+                    }`}
+                  >
+                    {isUser ? (
+                      <span className="text-xs font-bold">YOU</span>
+                    ) : (
+                      <svg
+                        className="w-4 h-4"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+                        />
+                      </svg>
+                    )}
+                  </div>
                 </div>
 
-                {/* Message card */}
+                {/* Chat bubble with gradient */}
                 <div
-                  className={`rounded-3xl px-8 py-6 text-[15px] leading-relaxed backdrop-blur-xl transition ${
+                  className={`relative rounded-2xl px-5 py-3 shadow-lg ${
                     isUser
-                      ? "bg-gradient-to-br from-blue-600/90 to-indigo-600/90 text-white shadow-[0_0_40px_rgba(59,130,246,0.35)]"
-                      : "bg-zinc-900/70 text-zinc-100 border border-zinc-800 shadow-[0_0_60px_rgba(99,102,241,0.15)]"
+                      ? "rounded-br-none bg-gradient-to-br from-blue-600 via-indigo-600 to-blue-700"
+                      : "rounded-bl-none bg-gradient-to-br from-gray-800 via-gray-800 to-gray-900 border border-gray-700/50"
                   }`}
                 >
-                  {msg.content}
+                  {/* Gradient overlay for user messages */}
+                  {isUser && (
+                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-transparent via-white/10 to-transparent animate-gradient-shift" />
+                  )}
+
+                  <p className="relative text-white/90 leading-relaxed whitespace-pre-wrap break-words">
+                    {msg.content}
+                  </p>
+
+                  {/* Timestamp */}
+                  <div
+                    className={`flex ${
+                      isUser ? "justify-end" : "justify-start"
+                    } mt-2`}
+                  >
+                    <span className="text-xs opacity-50">
+                      {new Date().toLocaleTimeString([], {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
           );
         })}
-
-        <div ref={bottomRef} />
+        <div ref={bottomRef} className="h-px" />
       </div>
     </div>
   );

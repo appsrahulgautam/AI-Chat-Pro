@@ -7,68 +7,76 @@ import ChatInput from "@/components/ChatInput";
 export default function HomePage() {
   const initialMessage: Message = {
     role: "assistant",
-    content:
-      "You’re inside AI Chat Pro. Ask complex questions, build ideas, or think out loud.",
+    content: "Hello! I'm your AI assistant. How can I help you today?",
   };
 
   const [messages, setMessages] = useState<Message[]>([initialMessage]);
 
-  const clearChat = () => {
-    setMessages([initialMessage]);
-  };
-
   return (
-    <div className="h-screen w-screen bg-black text-zinc-100">
-      {/* Global ambient background */}
-      <div className="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_70%_10%,rgba(168,85,247,0.15),transparent_40%)]" />
+    <div className="relative min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950 text-white overflow-hidden">
+      {/* Animated gradient background */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-600/20 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute top-1/3 -left-20 w-80 h-80 bg-indigo-600/10 rounded-full blur-3xl" />
+        <div className="absolute -bottom-40 right-1/3 w-80 h-80 bg-blue-600/10 rounded-full blur-3xl animate-pulse delay-1000" />
+      </div>
 
-      {/* Header */}
-      <header className="flex h-16 items-center justify-between border-b border-zinc-800 bg-black/50 px-8 backdrop-blur-xl">
-        <div className="flex items-center gap-4">
-          <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 shadow-lg" />
-
-          <div>
-            <div className="text-sm font-semibold tracking-wide">
-              AI Chat Pro
+      {/* Main container */}
+      <div className="relative flex flex-col h-screen max-w-7xl mx-auto">
+        {/* Header with logo only */}
+        <header className="sticky top-0 z-50 w-full py-4 px-6 border-b border-white/10 backdrop-blur-xl bg-gray-900/50">
+          <div className="flex items-center">
+            <div className="flex items-center gap-3">
+              <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 p-0.5">
+                <div className="h-full w-full rounded-[10px] bg-gray-900 flex items-center justify-center">
+                  <svg
+                    className="w-6 h-6 text-white"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M13 10V3L4 14h7v7l9-11h-7z"
+                    />
+                  </svg>
+                </div>
+              </div>
+              <span className="text-xl font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
+                NeuralChat
+              </span>
             </div>
-            <div className="text-[11px] text-zinc-400">Neural interface v1</div>
           </div>
-        </div>
+        </header>
 
-        <button
-          onClick={clearChat}
-          className="rounded-xl border border-zinc-700 px-4 py-2 text-xs text-zinc-300 transition hover:bg-zinc-900"
-        >
-          New Session
-        </button>
-      </header>
-
-      {/* Main layout */}
-      <div className="flex h-[calc(100vh-4rem)]">
-        {/* Sidebar */}
-        <aside className="hidden w-72 flex-col border-r border-zinc-800 bg-zinc-950/60 backdrop-blur-xl md:flex">
-          <div className="px-6 py-6 text-xs uppercase tracking-widest text-zinc-500">
-            Sessions
+        {/* Chat container */}
+        <main className="flex-1 flex flex-col overflow-hidden">
+          {/* Messages area with proper spacing */}
+          <div className="flex-1 overflow-hidden">
+            <ChatMessages messages={messages} />
           </div>
 
-          <div className="px-6 text-sm text-zinc-400">(Coming soon)</div>
-        </aside>
-
-        {/* Chat area */}
-        <main className="flex flex-1 flex-col">
-          <ChatMessages messages={messages} />
-
-          <ChatInput
-            onUserMessage={(text) =>
-              setMessages((prev) => [...prev, { role: "user", content: text }])
-            }
-            onReply={(reply) =>
-              setMessages((prev) => [
-                ...prev,
-                { role: "assistant", content: reply },
-              ])
-            }
-          />
+          {/* Input area with margin */}
+          <div className="px-4 pb-6 pt-4 border-t border-white/10 bg-gradient-to-t from-gray-900/80 via-gray-900/40 to-transparent">
+            <div className="max-w-3xl mx-auto">
+              <ChatInput
+                onUserMessage={(text) =>
+                  setMessages((prev) => [
+                    ...prev,
+                    { role: "user", content: text },
+                  ])
+                }
+                onReply={(reply) =>
+                  setMessages((prev) => [
+                    ...prev,
+                    { role: "assistant", content: reply },
+                  ])
+                }
+              />
+            </div>
+          </div>
         </main>
       </div>
     </div>
