@@ -4,7 +4,7 @@
 
 ### **Blazing-Fast, Minimal & Production-Ready AI Chat Experience**
 
-[![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-Online-success?style=for-the-badge)](#)
+[![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-Online-success?style=for-the-badge)](https://ai-chat-pro-fast.vercel.app/)
 [![Next.js](https://img.shields.io/badge/Next.js-App_Router-black?style=for-the-badge&logo=nextdotjs)](#)
 
 ![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)
@@ -88,24 +88,6 @@ Designed for **real users, real conversations, and real-world usage**.
 
 ---
 
-
-## 🧩 Architecture Overview
-
-```text
-User Input
-   ↓
-Next.js Client UI
-   ↓
-Server Actions / API Routes
-   ↓
-Groq AI Inference Engine
-   ↓
-Instant AI Response
-
-## 🎨 Design Philosophy
-
-
----
 
 
 > **“Feels like a real product, not a prototype.”**
